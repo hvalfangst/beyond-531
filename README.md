@@ -1,4 +1,4 @@
-# Beyond 531
+# Beyond 531: Strength Training Program Generator
 
 Strength training program generator based on Beyond 531: https://hvalfangst.github.io/beyond-531
 
