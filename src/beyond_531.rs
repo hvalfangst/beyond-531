@@ -40,28 +40,36 @@ impl Beyond531Calculator {
         for week_number in 1..=4 {
             let mut sessions = Vec::new();
             
-            // Monday session (always 3-5x5 at 75%)
+            // Monday session (reduced volume: 3x5 for front squat & bench, 1x5 for deadlift)
+            // Week 1 & 4: 65% to reduce CNS fatigue, Week 2 & 3: 75%
+            let monday_intensity = match week_number {
+                1 | 4 => 0.65,
+                2 | 3 => 0.75,
+                _ => unreachable!(),
+            };
+            let monday_percentage = monday_intensity * 100.0;
+            
             let monday_exercises = vec![
                 Exercise {
                     name: "Front Squat".to_string(),
-                    sets: 5,
+                    sets: 3,
                     reps: 5,
-                    weight: Self::round_to_2_5(one_rep_max.front_squat * 0.75),
-                    percentage: 75.0,
+                    weight: Self::round_to_2_5(one_rep_max.front_squat * monday_intensity),
+                    percentage: monday_percentage,
                 },
                 Exercise {
                     name: "Deadlift".to_string(),
-                    sets: 3,
+                    sets: 1,
                     reps: 5,
-                    weight: Self::round_to_2_5(one_rep_max.deadlift * 0.75),
-                    percentage: 75.0,
+                    weight: Self::round_to_2_5(one_rep_max.deadlift * monday_intensity),
+                    percentage: monday_percentage,
                 },
                 Exercise {
                     name: "Bench Press".to_string(),
-                    sets: 5,
+                    sets: 3,
                     reps: 5,
-                    weight: Self::round_to_2_5(one_rep_max.bench_press * 0.75),
-                    percentage: 75.0,
+                    weight: Self::round_to_2_5(one_rep_max.bench_press * monday_intensity),
+                    percentage: monday_percentage,
                 },
             ];
             
@@ -73,52 +81,52 @@ impl Beyond531Calculator {
             // Friday session (varies by week)
             let friday_exercises = match week_number {
                 1 => {
-                    // Week 1: 5x5 at 75%
+                    // Week 1: 5x3 at 80%
                     vec![
                         Exercise {
                             name: "Front Squat".to_string(),
                             sets: 5,
-                            reps: 5,
-                            weight: Self::round_to_2_5(one_rep_max.front_squat * 0.75),
-                            percentage: 75.0,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.front_squat * 0.80),
+                            percentage: 80.0,
                         },
                         Exercise {
                             name: "Deadlift".to_string(),
                             sets: 3,
-                            reps: 5,
-                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.75),
-                            percentage: 75.0,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.80),
+                            percentage: 80.0,
                         },
                         Exercise {
                             name: "Bench Press".to_string(),
                             sets: 5,
-                            reps: 5,
-                            weight: Self::round_to_2_5(one_rep_max.bench_press * 0.75),
-                            percentage: 75.0,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.bench_press * 0.80),
+                            percentage: 80.0,
                         },
                     ]
                 },
                 2 => {
-                    // Week 2: 5x5 at 85%
+                    // Week 2: 5x3 at 85%
                     vec![
                         Exercise {
                             name: "Front Squat".to_string(),
                             sets: 5,
-                            reps: 5,
+                            reps: 3,
                             weight: Self::round_to_2_5(one_rep_max.front_squat * 0.85),
                             percentage: 85.0,
                         },
                         Exercise {
                             name: "Deadlift".to_string(),
                             sets: 3,
-                            reps: 5,
+                            reps: 3,
                             weight: Self::round_to_2_5(one_rep_max.deadlift * 0.85),
                             percentage: 85.0,
                         },
                         Exercise {
                             name: "Bench Press".to_string(),
                             sets: 5,
-                            reps: 5,
+                            reps: 3,
                             weight: Self::round_to_2_5(one_rep_max.bench_press * 0.85),
                             percentage: 85.0,
                         },
@@ -136,7 +144,7 @@ impl Beyond531Calculator {
                         },
                         Exercise {
                             name: "Deadlift".to_string(),
-                            sets: 3,
+                            sets: 1,
                             reps: 3,
                             weight: Self::round_to_2_5(one_rep_max.deadlift * 0.90),
                             percentage: 90.0,
