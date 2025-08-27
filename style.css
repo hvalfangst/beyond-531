@@ -1,0 +1,318 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+/* Calculator container */
+.calculator-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 30px;
+}
+
+/* Header styles */
+.calculator-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.calculator-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2a5298;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.calculator-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.program-info {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.reset-button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.reset-button:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+}
+
+/* Input section */
+.input-section {
+    margin-bottom: 30px;
+}
+
+.input-section h2 {
+    font-size: 1.8rem;
+    color: #2a5298;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-field label {
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.95rem;
+}
+
+.input-field input {
+    padding: 12px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.input-field input:focus {
+    border-color: #2a5298;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+}
+
+/* Program description */
+.program-description {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-left: 5px solid #2a5298;
+}
+
+.program-description h3 {
+    color: #2a5298;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.program-description ul {
+    list-style: none;
+    margin-bottom: 15px;
+}
+
+.program-description li {
+    padding: 8px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.program-description li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #2a5298;
+    font-weight: bold;
+}
+
+.program-description p {
+    color: #666;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* Training program display */
+.training-program {
+    display: grid;
+    gap: 25px;
+}
+
+.week {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.week:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.week-title {
+    color: #2a5298;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.week:nth-child(4) .week-title {
+    color: #dc3545;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sessions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+}
+
+.session {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+}
+
+
+.session-day {
+    color: #495057;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.exercises {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.exercise {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.exercise:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Intensity-based colors */
+.intensity-75 {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border-color: #1e7e34;
+}
+
+.intensity-85 {
+    background: linear-gradient(135deg, #ffc107, #ffb300);
+    border-color: #d39e00;
+    color: #212529;
+    text-shadow: none;
+}
+
+.intensity-90 {
+    background: linear-gradient(135deg, #fd7e14, #ff6b35);
+    border-color: #dc5b00;
+}
+
+.intensity-100 {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    border-color: #bd2130;
+}
+
+.intensity-105 {
+    background: linear-gradient(135deg, #6f42c1, #5a32a3);
+    border-color: #493287;
+}
+
+.intensity-warmup {
+    background: linear-gradient(135deg, #ffc107, #ffb300);
+    border-color: #d39e00;
+    color: #212529;
+    text-shadow: none;
+}
+
+.intensity-default {
+    background: #f8f9fa;
+    color: #495057;
+    border: 1px solid #e9ecef;
+    text-shadow: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .calculator-container {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .calculator-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .calculator-header h1 {
+        font-size: 2rem;
+    }
+    
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .sessions {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .calculator-container {
+        padding: 15px;
+    }
+    
+    .calculator-header h1 {
+        font-size: 1.8rem;
+    }
+}
