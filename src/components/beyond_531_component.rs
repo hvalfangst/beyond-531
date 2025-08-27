@@ -13,19 +13,6 @@ pub fn Beyond531Calculator() -> impl IntoView {
         front_squat_1rm.get() > 0.0 && deadlift_1rm.get() > 0.0 && bench_press_1rm.get() > 0.0
     });
     
-    // Reset program_generated when inputs change
-    create_effect(move |_| {
-        // Watch for changes in input values
-        let _ = front_squat_1rm.get();
-        let _ = deadlift_1rm.get();
-        let _ = bench_press_1rm.get();
-        
-        // If program was already generated and inputs changed, reset the generated state
-        if program_generated.get() {
-            set_program_generated.set(false);
-        }
-    });
-    
     let training_program = create_memo(move |_| {
         if program_generated.get() && has_valid_inputs.get() {
             let one_rep_max = OneRepMax {
