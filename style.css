@@ -83,6 +83,65 @@ body {
     text-align: center;
 }
 
+.input-prompt {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-prompt .instruction {
+    font-size: 1.1rem;
+    color: #666;
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #2a5298;
+    display: inline-block;
+}
+
+.input-complete {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.input-complete .success {
+    font-size: 1.1rem;
+    color: #155724;
+    background: #d4edda;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+    display: inline-block;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.generate-button {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+}
+
+.generate-button:hover {
+    background: linear-gradient(135deg, #218838, #1e7e34);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+.generate-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+}
+
 .input-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -115,6 +174,51 @@ body {
     border-color: #2a5298;
     outline: none;
     box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+}
+
+/* Waiting for input section */
+.waiting-for-input {
+    margin-top: 40px;
+}
+
+.program-preview {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 30px;
+    border-left: 5px solid #2a5298;
+}
+
+.program-preview h3 {
+    color: #2a5298;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.preview-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.feature {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+    text-align: center;
+}
+
+.feature h4 {
+    color: #2a5298;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.feature p {
+    color: #666;
+    line-height: 1.5;
 }
 
 /* Program description */

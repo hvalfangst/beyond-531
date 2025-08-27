@@ -18,6 +18,7 @@ pub fn InputField(
                 value=move || value.get()
                 on:input=move |ev| {
                     if let Ok(new_value) = event_target_value(&ev).parse::<f64>() {
+                        leptos::logging::log!("Input changed to: {}", new_value);
                         on_change.set(new_value);
                     }
                 }
