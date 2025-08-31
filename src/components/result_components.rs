@@ -73,12 +73,13 @@ pub fn ExerciseDisplay(exercise: Exercise) -> impl IntoView {
     };
     
     let intensity_class = match exercise.percentage as u32 {
+        65 => "intensity-65",
         75 => "intensity-75",
+        80 => "intensity-warmup", // For warmup sets
         85 => "intensity-85", 
         90 => "intensity-90",
         100 => "intensity-100",
         105 => "intensity-105",
-        65 | 80 => "intensity-warmup", // For warmup sets
         _ => "intensity-default",
     };
     
