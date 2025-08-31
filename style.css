@@ -340,6 +340,13 @@ body {
 }
 
 /* Intensity-based colors */
+.intensity-65 {
+    background: linear-gradient(135deg, #90ee90, #98fb98);
+    border-color: #32cd32;
+    color: #2d5a2d;
+    text-shadow: none;
+}
+
 .intensity-75 {
     background: linear-gradient(135deg, #28a745, #20c997);
     border-color: #1e7e34;
