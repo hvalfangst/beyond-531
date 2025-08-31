@@ -113,12 +113,12 @@ pub fn Beyond531Calculator() -> impl IntoView {
                             <div class="program-description">
                                 <h3>"Program Overview"</h3>
                                 <ul>
-                                    <li><strong>"Week 1:"</strong> " Moderate intensity - Friday moves to 5x3 @ 80%"</li>
-                                    <li><strong>"Week 2:"</strong> " Increased intensity - Friday moves to 5x3 @ 85%"</li>
-                                    <li><strong>"Week 3:"</strong> " High intensity - Friday becomes 3x3 @ 90% (DL: 1x3)"</li>
-                                    <li><strong>"Week 4:"</strong> " MAX WEEK - Test your limits up to 105%!"</li>
+                                    <li><strong>"Week 1:"</strong> " Moderate intensity (80%)"</li>
+                                    <li><strong>"Week 2:"</strong> " Increased intensity (85%)"</li>
+                                    <li><strong>"Week 3:"</strong> " High intensity (90%)"</li>
+                                    <li><strong>"Week 4:"</strong> " MAX WEEK (100-105%)"</li>
                                 </ul>
-                                <p>"Monday sessions: Weeks 1&4 @ 65%, Weeks 2&3 @ 75% to manage CNS fatigue."</p>
+                                <p>"Monday sessions use reduced intensity for CNS management: 65% on Weeks 1 & 4, 75% on Weeks 2 & 3."</p>
                             </div>
                             
                             <div class="results-display">
