@@ -66,7 +66,11 @@ pub fn SessionDisplay(session: Session) -> impl IntoView {
 
 #[component]
 pub fn ExerciseDisplay(exercise: Exercise) -> impl IntoView {
-    let display_text = if exercise.sets == 1 && exercise.reps == 1 {
+    let display_text = if exercise.is_amrap && exercise.sets == 1 && exercise.reps == 1 {
+        format!("{}: 1+ @ {}kg ({}%)", exercise.name, exercise.weight, exercise.percentage as u32)
+    } else if exercise.is_amrap {
+        format!("{}: {}x{}+ @ {}kg ({}%)", exercise.name, exercise.sets, exercise.reps, exercise.weight, exercise.percentage as u32)
+    } else if exercise.sets == 1 && exercise.reps == 1 {
         format!("{}: {}kg ({}%)", exercise.name, exercise.weight, exercise.percentage as u32)
     } else {
         format!("{}: {}x{} @ {}kg ({}%)", exercise.name, exercise.sets, exercise.reps, exercise.weight, exercise.percentage as u32)
@@ -74,10 +78,12 @@ pub fn ExerciseDisplay(exercise: Exercise) -> impl IntoView {
     
     let intensity_class = match exercise.percentage as u32 {
         65 => "intensity-65",
+        70 => "intensity-65", // Same color as 65%
         75 => "intensity-75",
         80 => "intensity-warmup", // For warmup sets
         85 => "intensity-85", 
         90 => "intensity-90",
+        95 => "intensity-90", // Same color as 90%
         100 => "intensity-100",
         105 => "intensity-105",
         _ => "intensity-default",

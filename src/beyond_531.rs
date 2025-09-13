@@ -12,6 +12,7 @@ pub struct Exercise {
     pub reps: u32,
     pub weight: f64,
     pub percentage: f64,
+    pub is_amrap: bool,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -56,6 +57,7 @@ impl Beyond531Calculator {
                     reps: 5,
                     weight: Self::round_to_2_5(one_rep_max.front_squat * monday_intensity),
                     percentage: monday_percentage,
+                    is_amrap: false,
                 },
                 Exercise {
                     name: "Deadlift".to_string(),
@@ -63,6 +65,7 @@ impl Beyond531Calculator {
                     reps: 5,
                     weight: Self::round_to_2_5(one_rep_max.deadlift * monday_intensity),
                     percentage: monday_percentage,
+                    is_amrap: false,
                 },
                 Exercise {
                     name: "Bench Press".to_string(),
@@ -70,6 +73,7 @@ impl Beyond531Calculator {
                     reps: 5,
                     weight: Self::round_to_2_5(one_rep_max.bench_press * monday_intensity),
                     percentage: monday_percentage,
+                    is_amrap: false,
                 },
             ];
             
@@ -81,80 +85,233 @@ impl Beyond531Calculator {
             // Friday session (varies by week)
             let friday_exercises = match week_number {
                 1 => {
-                    // Week 1: 5x3 at 80%
+                    // Week 1: Original 5/3/1 rep scheme for all exercises (65%, 75%, 80% of real max)
                     vec![
                         Exercise {
                             name: "Front Squat".to_string(),
-                            sets: 5,
-                            reps: 3,
+                            sets: 1,
+                            reps: 5,
+                            weight: Self::round_to_2_5(one_rep_max.front_squat * 0.65),
+                            percentage: 65.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Front Squat".to_string(),
+                            sets: 1,
+                            reps: 5,
+                            weight: Self::round_to_2_5(one_rep_max.front_squat * 0.75),
+                            percentage: 75.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Front Squat".to_string(),
+                            sets: 1,
+                            reps: 5,
                             weight: Self::round_to_2_5(one_rep_max.front_squat * 0.80),
                             percentage: 80.0,
+                            is_amrap: true,
                         },
                         Exercise {
                             name: "Deadlift".to_string(),
-                            sets: 3,
-                            reps: 3,
+                            sets: 1,
+                            reps: 5,
+                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.65),
+                            percentage: 65.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Deadlift".to_string(),
+                            sets: 1,
+                            reps: 5,
+                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.75),
+                            percentage: 75.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Deadlift".to_string(),
+                            sets: 1,
+                            reps: 5,
                             weight: Self::round_to_2_5(one_rep_max.deadlift * 0.80),
                             percentage: 80.0,
+                            is_amrap: true,
                         },
                         Exercise {
                             name: "Bench Press".to_string(),
-                            sets: 5,
-                            reps: 3,
+                            sets: 1,
+                            reps: 5,
+                            weight: Self::round_to_2_5(one_rep_max.bench_press * 0.65),
+                            percentage: 65.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Bench Press".to_string(),
+                            sets: 1,
+                            reps: 5,
+                            weight: Self::round_to_2_5(one_rep_max.bench_press * 0.75),
+                            percentage: 75.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Bench Press".to_string(),
+                            sets: 1,
+                            reps: 5,
                             weight: Self::round_to_2_5(one_rep_max.bench_press * 0.80),
                             percentage: 80.0,
+                            is_amrap: true,
                         },
                     ]
                 },
                 2 => {
-                    // Week 2: 5x3 at 85%
+                    // Week 2: Reduced intensity for all exercises (65%, 75%, 85% of real max)
                     vec![
                         Exercise {
                             name: "Front Squat".to_string(),
-                            sets: 5,
+                            sets: 1,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.front_squat * 0.65),
+                            percentage: 65.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Front Squat".to_string(),
+                            sets: 1,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.front_squat * 0.75),
+                            percentage: 75.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Front Squat".to_string(),
+                            sets: 1,
                             reps: 3,
                             weight: Self::round_to_2_5(one_rep_max.front_squat * 0.85),
                             percentage: 85.0,
-                        },
-                        Exercise {
-                            name: "Deadlift".to_string(),
-                            sets: 3,
-                            reps: 3,
-                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.85),
-                            percentage: 85.0,
-                        },
-                        Exercise {
-                            name: "Bench Press".to_string(),
-                            sets: 5,
-                            reps: 3,
-                            weight: Self::round_to_2_5(one_rep_max.bench_press * 0.85),
-                            percentage: 85.0,
-                        },
-                    ]
-                },
-                3 => {
-                    // Week 3: 3x3 at 90%
-                    vec![
-                        Exercise {
-                            name: "Front Squat".to_string(),
-                            sets: 3,
-                            reps: 3,
-                            weight: Self::round_to_2_5(one_rep_max.front_squat * 0.90),
-                            percentage: 90.0,
+                            is_amrap: true,
                         },
                         Exercise {
                             name: "Deadlift".to_string(),
                             sets: 1,
                             reps: 3,
-                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.90),
-                            percentage: 90.0,
+                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.65),
+                            percentage: 65.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Deadlift".to_string(),
+                            sets: 1,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.75),
+                            percentage: 75.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Deadlift".to_string(),
+                            sets: 1,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.85),
+                            percentage: 85.0,
+                            is_amrap: true,
                         },
                         Exercise {
                             name: "Bench Press".to_string(),
-                            sets: 3,
+                            sets: 1,
                             reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.bench_press * 0.65),
+                            percentage: 65.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Bench Press".to_string(),
+                            sets: 1,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.bench_press * 0.75),
+                            percentage: 75.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Bench Press".to_string(),
+                            sets: 1,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.bench_press * 0.85),
+                            percentage: 85.0,
+                            is_amrap: true,
+                        },
+                    ]
+                },
+                3 => {
+                    // Week 3: Reduced intensity for all exercises (70%, 80%, 90% of real max)
+                    vec![
+                        Exercise {
+                            name: "Front Squat".to_string(),
+                            sets: 1,
+                            reps: 5,
+                            weight: Self::round_to_2_5(one_rep_max.front_squat * 0.70),
+                            percentage: 70.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Front Squat".to_string(),
+                            sets: 1,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.front_squat * 0.80),
+                            percentage: 80.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Front Squat".to_string(),
+                            sets: 1,
+                            reps: 1,
+                            weight: Self::round_to_2_5(one_rep_max.front_squat * 0.90),
+                            percentage: 90.0,
+                            is_amrap: true,
+                        },
+                        Exercise {
+                            name: "Deadlift".to_string(),
+                            sets: 1,
+                            reps: 5,
+                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.70),
+                            percentage: 70.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Deadlift".to_string(),
+                            sets: 1,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.80),
+                            percentage: 80.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Deadlift".to_string(),
+                            sets: 1,
+                            reps: 1,
+                            weight: Self::round_to_2_5(one_rep_max.deadlift * 0.90),
+                            percentage: 90.0,
+                            is_amrap: true,
+                        },
+                        Exercise {
+                            name: "Bench Press".to_string(),
+                            sets: 1,
+                            reps: 5,
+                            weight: Self::round_to_2_5(one_rep_max.bench_press * 0.70),
+                            percentage: 70.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Bench Press".to_string(),
+                            sets: 1,
+                            reps: 3,
+                            weight: Self::round_to_2_5(one_rep_max.bench_press * 0.80),
+                            percentage: 80.0,
+                            is_amrap: false,
+                        },
+                        Exercise {
+                            name: "Bench Press".to_string(),
+                            sets: 1,
+                            reps: 1,
                             weight: Self::round_to_2_5(one_rep_max.bench_press * 0.90),
                             percentage: 90.0,
+                            is_amrap: true,
                         },
                     ]
                 },
@@ -169,11 +326,20 @@ impl Beyond531Calculator {
                     ] {
                         exercises.extend([
                             Exercise {
+                                name: format!("{} - Warmup", exercise_name),
+                                sets: 1,
+                                reps: 1,
+                                weight: Self::round_to_2_5(one_rm * 0.65),
+                                percentage: 65.0,
+                                is_amrap: false,
+                            },
+                            Exercise {
                                 name: format!("{} - Single", exercise_name),
                                 sets: 1,
                                 reps: 1,
                                 weight: Self::round_to_2_5(one_rm * 0.80),
                                 percentage: 80.0,
+                                is_amrap: false,
                             },
                             Exercise {
                                 name: format!("{} - Single", exercise_name),
@@ -181,6 +347,7 @@ impl Beyond531Calculator {
                                 reps: 1,
                                 weight: Self::round_to_2_5(one_rm * 0.90),
                                 percentage: 90.0,
+                                is_amrap: false,
                             },
                             Exercise {
                                 name: format!("{} - Max", exercise_name),
@@ -188,6 +355,7 @@ impl Beyond531Calculator {
                                 reps: 1,
                                 weight: Self::round_to_2_5(one_rm * 1.00),
                                 percentage: 100.0,
+                                is_amrap: false,
                             },
                             Exercise {
                                 name: format!("{} - BEYOND!", exercise_name),
@@ -195,6 +363,7 @@ impl Beyond531Calculator {
                                 reps: 1,
                                 weight: Self::round_to_2_5(one_rm * 1.05),
                                 percentage: 105.0,
+                                is_amrap: false,
                             },
                         ]);
                     }

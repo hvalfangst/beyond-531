@@ -113,12 +113,12 @@ pub fn Beyond531Calculator() -> impl IntoView {
                             <div class="program-description">
                                 <h3>"Program Overview"</h3>
                                 <ul>
-                                    <li><strong>"Week 1:"</strong> " Moderate intensity (80%)"</li>
-                                    <li><strong>"Week 2:"</strong> " Increased intensity (85%)"</li>
-                                    <li><strong>"Week 3:"</strong> " High intensity (90%)"</li>
-                                    <li><strong>"Week 4:"</strong> " MAX WEEK (100-105%)"</li>
+                                    <li><strong>"Week 1:"</strong> " Friday top set: 5+ @ 80%"</li>
+                                    <li><strong>"Week 2:"</strong> " Friday top set: 3+ @ 85%"</li>
+                                    <li><strong>"Week 3:"</strong> " Friday top set: 1+ @ 90%"</li>
+                                    <li><strong>"Week 4:"</strong> " MAX WEEK: Singles up to 105%"</li>
                                 </ul>
-                                <p>"Monday sessions use reduced intensity for CNS management: 65% on Weeks 1 & 4, 75% on Weeks 2 & 3."</p>
+                                <p>"Monday sessions use reduced volume for CNS management: 65% on Weeks 1 & 4, 75% on Weeks 2 & 3. Friday sessions follow modified 5/3/1 progression with AMRAP top sets (+ indicates as many reps as possible)."</p>
                             </div>
                             
                             <div class="results-display">
