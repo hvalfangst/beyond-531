@@ -3,17 +3,58 @@ use crate::beyond_531::*;
 
 #[component]
 pub fn TrainingProgramDisplay(program: Memo<TrainingProgram>) -> impl IntoView {
+    let (selected_week, set_selected_week) = create_signal(1);
+
+    let program_data = program.get();
+    let selected_week_data = create_memo(move |_| {
+        program_data.weeks.iter()
+            .find(|week| week.week_number == selected_week.get())
+            .cloned()
+    });
+
     view! {
-        <div class="training-program">
-            <For
-                each=move || program.get().weeks
-                key=|week| week.week_number
-                children=move |week| {
-                    view! {
-                        <WeekDisplay week=week />
+        <div class="training-program-container">
+            <div class="week-selector">
+                <h3 class="selector-title">"Select Week"</h3>
+                <div class="week-tabs">
+                    <For
+                        each=move || program.get().weeks.clone()
+                        key=|week| week.week_number
+                        children=move |week| {
+                            let week_num = week.week_number;
+                            let is_selected = create_memo(move |_| selected_week.get() == week_num);
+                            let week_title = if week_num == 4 {
+                                "W4".to_string()
+                            } else {
+                                format!("W{}", week_num)
+                            };
+
+                            view! {
+                                <button
+                                    class=move || format!("week-tab {}", if is_selected.get() { "active" } else { "" })
+                                    on:click=move |_| set_selected_week.set(week_num)
+                                >
+                                    {week_title}
+                                </button>
+                            }
+                        }
+                    />
+                </div>
+            </div>
+
+            <div class="week-display-container">
+                {move || {
+                    if let Some(week) = selected_week_data.get() {
+                        view! {
+                            <WeekDisplay week=week />
+                        }.into_view()
+                    } else {
+                        view! {
+                            <div class="no-week-selected">"Select a week to view details"</div>
+                        }.into_view()
                     }
-                }
-            />
+                }}
+            </div>
         </div>
     }
 }
