@@ -1,6 +1,6 @@
-use leptos::*;
-use crate::beyond_531::{OneRepMax, Beyond531Calculator as Calculator};
+use crate::beyond_531::{Beyond531Calculator as Calculator, OneRepMax};
 use crate::components::{InputField, TrainingProgramDisplay};
+use leptos::*;
 
 #[component]
 pub fn Beyond531Calculator() -> impl IntoView {
@@ -8,11 +8,11 @@ pub fn Beyond531Calculator() -> impl IntoView {
     let (deadlift_1rm, set_deadlift_1rm) = create_signal(0.0);
     let (bench_press_1rm, set_bench_press_1rm) = create_signal(0.0);
     let (program_generated, set_program_generated) = create_signal(false);
-    
+
     let has_valid_inputs = create_memo(move |_| {
         front_squat_1rm.get() > 0.0 && deadlift_1rm.get() > 0.0 && bench_press_1rm.get() > 0.0
     });
-    
+
     let training_program = create_memo(move |_| {
         if program_generated.get() && has_valid_inputs.get() {
             let one_rep_max = OneRepMax {
@@ -20,25 +20,29 @@ pub fn Beyond531Calculator() -> impl IntoView {
                 deadlift: deadlift_1rm.get(),
                 bench_press: bench_press_1rm.get(),
             };
-            leptos::logging::log!("Recalculating program with: squat={}, deadlift={}, bench={}", 
-                one_rep_max.front_squat, one_rep_max.deadlift, one_rep_max.bench_press);
+            leptos::logging::log!(
+                "Recalculating program with: squat={}, deadlift={}, bench={}",
+                one_rep_max.front_squat,
+                one_rep_max.deadlift,
+                one_rep_max.bench_press
+            );
             Some(Calculator::calculate_program(&one_rep_max))
         } else {
             None
         }
     });
-    
+
     let generate_program = move |_| {
         set_program_generated.set(true);
     };
-    
+
     let reset_calculator = move |_| {
         set_front_squat_1rm.set(0.0);
         set_deadlift_1rm.set(0.0);
         set_bench_press_1rm.set(0.0);
         set_program_generated.set(false);
     };
-    
+
     view! {
         <div class="calculator-container">
             <div class="calculator-header">
@@ -52,7 +56,7 @@ pub fn Beyond531Calculator() -> impl IntoView {
                     </button>
                 </div>
             </div>
-            
+
             <div class="input-section">
                 <h2>"Enter your 1 Rep Max (1RM) in kilograms"</h2>
                 {move || {
@@ -87,7 +91,7 @@ pub fn Beyond531Calculator() -> impl IntoView {
                         step=2.5
                         min=10.0
                     />
-                    
+
                     <InputField
                         label="Deadlift 1RM (kg)".to_string()
                         value=deadlift_1rm
@@ -95,7 +99,7 @@ pub fn Beyond531Calculator() -> impl IntoView {
                         step=2.5
                         min=10.0
                     />
-                    
+
                     <InputField
                         label="Bench Press 1RM (kg)".to_string()
                         value=bench_press_1rm
@@ -105,7 +109,7 @@ pub fn Beyond531Calculator() -> impl IntoView {
                     />
                 </div>
             </div>
-            
+
             {move || {
                 if program_generated.get() && has_valid_inputs.get() {
                     view! {
@@ -118,9 +122,9 @@ pub fn Beyond531Calculator() -> impl IntoView {
                                     <li><strong>"Week 3:"</strong> " Friday top set: 1+ @ 90%"</li>
                                     <li><strong>"Week 4:"</strong> " MAX WEEK: Singles up to 105%"</li>
                                 </ul>
-                                <p>"Monday sessions use reduced volume for CNS management: 65% on Weeks 1 & 4, 75% on Weeks 2 & 3. Friday sessions follow modified 5/3/1 progression with AMRAP top sets (+ indicates as many reps as possible)."</p>
+                                <p>"Monday sessions use reduced volume for CNS management: 65% on Weeks 1 & 4, 75% on Weeks 2 & 3. Friday sessions follow modified 5/3/1 progression with AMRAP top sets (+ indicates as many reps as possible). All Front Squat and Bench Press sessions include BBB back-off work (5x10 @ 50%)."</p>
                             </div>
-                            
+
                             <div class="results-display">
                                 <TrainingProgramDisplay program=create_memo(move |_| training_program.get().unwrap()) />
                             </div>

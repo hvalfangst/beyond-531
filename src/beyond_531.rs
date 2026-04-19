@@ -37,10 +37,11 @@ pub struct Beyond531Calculator;
 impl Beyond531Calculator {
     pub fn calculate_program(one_rep_max: &OneRepMax) -> TrainingProgram {
         let mut weeks = Vec::new();
-        
+        const BBB_INTENSITY: f64 = 0.50;
+
         for week_number in 1..=4 {
             let mut sessions = Vec::new();
-            
+
             // Monday session (reduced volume: 3x5 for front squat & bench, 1x5 for deadlift)
             // Week 1 & 4: 65% to reduce CNS fatigue, Week 2 & 3: 75%
             let monday_intensity = match week_number {
@@ -49,7 +50,7 @@ impl Beyond531Calculator {
                 _ => unreachable!(),
             };
             let monday_percentage = monday_intensity * 100.0;
-            
+
             let monday_exercises = vec![
                 Exercise {
                     name: "Front Squat".to_string(),
@@ -75,13 +76,15 @@ impl Beyond531Calculator {
                     percentage: monday_percentage,
                     is_amrap: false,
                 },
+                Self::bbb_exercise("Front Squat", one_rep_max.front_squat, BBB_INTENSITY),
+                Self::bbb_exercise("Bench Press", one_rep_max.bench_press, BBB_INTENSITY),
             ];
-            
+
             sessions.push(Session {
                 day: "Monday".to_string(),
                 exercises: monday_exercises,
             });
-            
+
             // Friday session (varies by week)
             let friday_exercises = match week_number {
                 1 => {
@@ -159,8 +162,10 @@ impl Beyond531Calculator {
                             percentage: 80.0,
                             is_amrap: true,
                         },
+                        Self::bbb_exercise("Front Squat", one_rep_max.front_squat, BBB_INTENSITY),
+                        Self::bbb_exercise("Bench Press", one_rep_max.bench_press, BBB_INTENSITY),
                     ]
-                },
+                }
                 2 => {
                     // Week 2: Reduced intensity for all exercises (65%, 75%, 85% of real max)
                     vec![
@@ -236,8 +241,10 @@ impl Beyond531Calculator {
                             percentage: 85.0,
                             is_amrap: true,
                         },
+                        Self::bbb_exercise("Front Squat", one_rep_max.front_squat, BBB_INTENSITY),
+                        Self::bbb_exercise("Bench Press", one_rep_max.bench_press, BBB_INTENSITY),
                     ]
-                },
+                }
                 3 => {
                     // Week 3: Reduced intensity for all exercises (70%, 80%, 90% of real max)
                     vec![
@@ -313,12 +320,14 @@ impl Beyond531Calculator {
                             percentage: 90.0,
                             is_amrap: true,
                         },
+                        Self::bbb_exercise("Front Squat", one_rep_max.front_squat, BBB_INTENSITY),
+                        Self::bbb_exercise("Bench Press", one_rep_max.bench_press, BBB_INTENSITY),
                     ]
-                },
+                }
                 4 => {
                     // Week 4: Max week - 3@65%, 1@80%, 1@90%, 1@100%, 1@105%
                     let mut exercises = Vec::new();
-                    
+
                     for (exercise_name, one_rm) in [
                         ("Front Squat", one_rep_max.front_squat),
                         ("Deadlift", one_rep_max.deadlift),
@@ -367,26 +376,41 @@ impl Beyond531Calculator {
                             },
                         ]);
                     }
+                    exercises.extend([
+                        Self::bbb_exercise("Front Squat", one_rep_max.front_squat, BBB_INTENSITY),
+                        Self::bbb_exercise("Bench Press", one_rep_max.bench_press, BBB_INTENSITY),
+                    ]);
                     exercises
-                },
+                }
                 _ => unreachable!(),
             };
-            
+
             sessions.push(Session {
                 day: "Friday".to_string(),
                 exercises: friday_exercises,
             });
-            
+
             weeks.push(Week {
                 week_number,
                 sessions,
             });
         }
-        
+
         TrainingProgram { weeks }
     }
-    
+
     fn round_to_2_5(weight: f64) -> f64 {
         (weight / 2.5).round() * 2.5
+    }
+
+    fn bbb_exercise(exercise_name: &str, one_rm: f64, intensity: f64) -> Exercise {
+        Exercise {
+            name: format!("{} - BBB", exercise_name),
+            sets: 5,
+            reps: 10,
+            weight: Self::round_to_2_5(one_rm * intensity),
+            percentage: intensity * 100.0,
+            is_amrap: false,
+        }
     }
 }

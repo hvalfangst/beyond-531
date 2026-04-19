@@ -1,8 +1,8 @@
 use leptos::*;
 use wasm_bindgen::prelude::*;
 
-mod components;
 mod beyond_531;
+mod components;
 
 use components::Beyond531Calculator;
 
